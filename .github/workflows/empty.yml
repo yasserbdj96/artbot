@@ -38,16 +38,16 @@ jobs:
           git add .
           git config user.name 'yasserbdj96'
           git config user.email 'by.root96@gmail.com'
-          git commit -m "null"
+          git commit -m "empty"
           git push 
           
       - name: third commit
-        run: sed -i '$ d' null.md
+        run: sed -i '$ d' empty.md
         
       - name: finishing
         run: |
           git add .
           git config user.name 'yasserbdj96'
           git config user.email 'by.root96@gmail.com'
-          git commit -m "null"
+          git commit -m "empty"
           git push 
