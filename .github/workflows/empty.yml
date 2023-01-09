@@ -14,15 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: step-1
-        id: xyz
-        run: python main.py >> $RU
+        run: |
+          RU=$(python main.py)
+          echo "RU=$RU" >> $GITHUB_ENV
       
       - name: step-2
-        if: $RU == "0"
+        if: ${{ env.RU }} == "0"
         run: |
           echo "Number lower than 1"
       
       - name: step-3
-        if: $RU == "1"
+        if: ${{ env.RU }} == "1"
         run: |
           echo "Number higher than 1"
