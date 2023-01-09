@@ -1,54 +1,25 @@
-# 
-
-name: CI
-
-# 
+name: empty workflows
 on:
-  # 
   push:
     branches: [ main ]
   workflow_dispatch:
   schedule:
     #- cron: '*/10 * * * *'
-    - cron: '*/10 * * * *'
-
+    - cron: '*/5 * * * *'
   pull_request:
     branches: [ main ]
-
-  # 
-
-# 
 jobs:
-  # 
   build:
-    # 
     runs-on: ubuntu-latest
-
-    # 
     steps:
-      # 
       - uses: actions/checkout@v2
-
-      # 
       - name: first commit
-        run: date >> empty.md
+        run: python main.py
 
-      # 
-      - name: second commit
-        run: |
-          git add .
-          git config user.name 'yasserbdj96'
-          git config user.email 'by.root96@gmail.com'
-          git commit -m "empty"
-          git push 
-          
-      - name: third commit
-        run: sed -i '$ d' empty.md
-        
       - name: finishing
         run: |
           git add .
           git config user.name 'yasserbdj96'
           git config user.email 'by.root96@gmail.com'
-          git commit -m "empty"
+          git commit -am "Update Files"
           git push 

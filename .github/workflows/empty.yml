@@ -1,0 +1,29 @@
+name: empty workflows
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    #- cron: '*/10 * * * *'
+    - cron: '*/5 * * * *'
+  pull_request:
+    branches: [ main ]
+job:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: step-1
+        id: xyz
+        run: echo "0"
+      
+      - name: step-2
+        if: steps.xyz.outputs.acc < 1
+        run: |
+          echo "Number lower than 1"
+          echo "${{ steps.xyz.outputs.acc }}"
+      
+      - name: step-3
+        if: steps.xyz.outputs.acc > 1
+        run: |
+          echo "Number higher than 1"
+          echo "${{ steps.xyz.outputs.acc }}"
