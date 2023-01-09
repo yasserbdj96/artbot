@@ -18,13 +18,13 @@ jobs:
         run: python main.py
       
       - name: step-2
-        if: steps.xyz.outputs.acc == 0
+        if: steps.xyz.outputs.acc < 1
         run: |
           echo "Number lower than 1"
           echo "${{ steps.xyz.outputs.acc }}"
       
       - name: step-3
-        if: steps.xyz.outputs.acc == 1
+        if: steps.xyz.outputs.acc > 1
         run: |
           echo "Number higher than 1"
           echo "${{ steps.xyz.outputs.acc }}"
