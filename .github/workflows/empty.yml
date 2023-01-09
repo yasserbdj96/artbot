@@ -14,17 +14,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: step-1
-        id: xyz
-        run: python main.py
-      
-      - name: step-2
-        if: steps.xyz.outputs.acc == 0
         run: |
-          echo "Number lower than 1"
-          echo "${{ steps.xyz.outputs.acc }}"
-      
-      - name: step-3
-        if: steps.xyz.outputs.acc == 1
-        run: |
-          echo "Number higher than 1"
-          echo "${{ steps.xyz.outputs.acc }}"
+          output=$(python main.py)
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}" 
+          echo "::set-output name=changelog::$output"
+        id: step1
+      - name: Print changelog
+        run: echo "${{ steps.step1.outputs.changelog }}"
