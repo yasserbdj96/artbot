@@ -14,17 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: step-1
-        id: xyz
-        run: python main.py
+        env:
+          COMMIT_VAR: python main.py
       
       - name: step-2
-        if: steps.xyz.outputs == 0
+        if: ${COMMIT_VAR} == 0
         run: |
           echo "Number lower than 1"
-          echo "${{ steps.xyz.outputs }}"
       
       - name: step-3
-        if: steps.xyz.outputs == 1
+        if: ${COMMIT_VAR} == 1
         run: |
           echo "Number higher than 1"
-          echo "${{ steps.xyz.outputs }}"
