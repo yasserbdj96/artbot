@@ -1,4 +1,4 @@
-name: empty workflows
+name: blank workflows
 on:
   push:
     branches: [ main ]
