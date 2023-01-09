@@ -22,9 +22,9 @@ jobs:
           echo "::set-output name=changelog::$output"
         id: step1
       - name: Print 0
-        if: ${{ steps.step1.outputs.changelog }} == 0
+        if: ${{ steps.step1.outputs.changelog == 0 }} 
         run: echo "${{ steps.step1.outputs.changelog }}"
 
       - name: Print 1
-        if: ${{ steps.step1.outputs.changelog }} == 1
+        if: ${{ steps.step1.outputs.changelog  == 1 }}
         run: echo "${{ steps.step1.outputs.changelog }}"
