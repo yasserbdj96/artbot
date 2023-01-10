@@ -20,13 +20,13 @@ now = datetime.now()
 file1=open('map.txt','r')
 Lines=file1.readlines()
 
-l1=Lines[0].strip().split(" ")
-l2=Lines[1].strip().split(" ")
-l3=Lines[2].strip().split(" ")
-l4=Lines[3].strip().split(" ")
-l5=Lines[4].strip().split(" ")
-l6=Lines[5].strip().split(" ")
-l7=Lines[6].strip().split(" ")
+l1=[*Lines[0].strip()]
+l2=[*Lines[1].strip()]
+l3=[*Lines[2].strip()]
+l4=[*Lines[3].strip()]
+l5=[*Lines[4].strip()]
+l6=[*Lines[5].strip()]
+l7=[*Lines[6].strip()]
 
 l=min([len(l1),len(l2),len(l3),len(l4),len(l5),len(l6),len(l7)])
 c=[]
