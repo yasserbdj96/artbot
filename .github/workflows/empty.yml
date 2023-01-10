@@ -1,13 +1,15 @@
 name: empty workflows
 on:
+  # 
   push:
     branches: [ main ]
   workflow_dispatch:
   schedule:
     #- cron: '*/10 * * * *'
     - cron: '*/5 * * * *'
-  pull_request:
-    branches: [ main ]
+#defaults:
+#  run:
+#    working-directory: wrdir
 jobs:
   build:
     runs-on: ubuntu-latest
