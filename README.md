@@ -1,4 +1,4 @@
-<p>A simple bot for coloring github contributions in order to form words or shapes as you want.</p>
+<p>A simple bot for coloring github contributions in order to form words or shapes as you want, This process takes a whole year</p>
 
 <br>
 <h2>Demo:</h2>

@@ -1,15 +1,20 @@
+#!/usr/bin/env python
+# coding:utf-8
+#   |                                                          |
+# --+----------------------------------------------------------+--
+#   |   Code by : yasserbdj96                                  |
+#   |   Email   : yasser.bdj96@gmail.com                       |
+#   |   Github  : https://github.com/yasserbdj96               |
+#   |   BTC     : bc1q2dks8w8uurca5xmfwv4jwl7upehyjjakr3xga9   |
+# --+----------------------------------------------------------+--  
+#   |        all posts #yasserbdj96 ,all views my own.         |
+# --+----------------------------------------------------------+--
+#   |                                                          |
+
+#START{
 from datetime import datetime
+
 now = datetime.now()
-
-
-"""
-
-
-f=open("README.md", "w+")
-f.write(f'last update at : {now.strftime("%d/%m/%Y %H:%M:%S")} (UTC)')
-f.close()
-print(0)
-"""
 
 # Using readlines()
 file1=open('map.txt','r')
@@ -35,7 +40,6 @@ for i in range(0,l):
     c.append(l6[i])
     c.append(l7[i])
 
-
 f=open('last.txt','r')
 g=f.readlines()[0].strip()
 Line=int(g.split(":")[0])
@@ -59,6 +63,12 @@ if work==True and wd!=dayis:
     #Line+=1
     f.close()
     print(1)
+elif Line+1==len(c):
+    f=open('last.txt','w')
+    f.write('-1:0')
+    #Line+=1
+    f.close()
+    print(1)
 else:
     if Line!=-1:
         print(c[Line])
@@ -68,3 +78,4 @@ else:
             f.close()
     else:
         print(0)
+#}END.
