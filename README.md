@@ -1,4 +1,9 @@
-<p>A simple bot for coloring github contributions in order to form words or shapes as you want, This process takes a whole year</p>
+<div align="center">
+  <br><img align="center" height="200" src="https://raw.githubusercontent.com/yasserbdj96/empty/main/screenshot/logo.png" alt="empty by yasserbdj96">
+  <h1>Hiphp</h1>
+  <strong>A simple bot for coloring github contributions in order to form words or shapes as you want, This process takes a whole year.</strong>
+</div>
+<br>
 
 <br>
 <h2>Demo:</h2>

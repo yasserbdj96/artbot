@@ -1,3 +1,15 @@
+//   |                                                          |
+// --+----------------------------------------------------------+--
+//   |   Code by : yasserbdj96                                  |
+//   |   Email   : yasser.bdj96@gmail.com                       |
+//   |   Github  : https://github.com/yasserbdj96               |
+//   |   BTC     : bc1q2dks8w8uurca5xmfwv4jwl7upehyjjakr3xga9   |
+// --+----------------------------------------------------------+--  
+//   |        all posts #yasserbdj96 ,all views my own.         |
+// --+----------------------------------------------------------+--
+//   |                                                          |
+
+//START{
 function empty(){
     var days=document.getElementById("days");
 
@@ -28,17 +40,7 @@ function empty(){
     l6="<tr>"+l6+"</tr>";
     l7="<tr>"+l7+"</tr>";
 
-
-
-
-
     days.innerHTML="<table id='table'>"+l1+l2+l3+l4+l5+l6+l7+"</table>";
-
-
-
-
-
-
 }
 
 
@@ -67,7 +69,6 @@ function get(){
     var l6="";
     var l7="";
     //for (var r = 0, n = table.rows.length; r < n; r++) {
-        
         for (var c = 0, m = table.rows[0].cells.length; c < m; c++) {
         //    console.log(table.rows[0].cells[c].textContent);
             l1+=table.rows[0].cells[c].textContent; 
@@ -81,7 +82,6 @@ function get(){
     //}
     var f=l1+"\n"+l2+"\n"+l3+"\n"+l4+"\n"+l5+"\n"+l6+"\n"+l7;
     console.log(f);
-
     download('map.txt',f);
 }
 
@@ -89,11 +89,9 @@ function download(filename, text) {
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
     element.setAttribute('download', filename);
-  
     element.style.display = 'none';
     document.body.appendChild(element);
-  
     element.click();
-  
     document.body.removeChild(element);
-  }
+}
+//}END.
