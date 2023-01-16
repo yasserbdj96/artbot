@@ -20,8 +20,9 @@ jobs:
           output=$(python main.py)
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}" 
-          echo "name=production::${output}" >> $GITHUB_OUTPUT
+          output="${output//$'\r'/'%0D'}"
+          echo "${output}"
+          echo "name=production" >> $GITHUB_OUTPUT
         id: step1
          #run: echo ${{ steps.vars.outputs.production }}
       #- name: Print 0
