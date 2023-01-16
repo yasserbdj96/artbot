@@ -37,4 +37,4 @@ jobs:
           git push 
       - name: Do Nothing
         if: ${{ steps.vars.outputs.production  == 0 }}
-        run: echo "${{ steps.vars.outputs.production }}
+        run: echo "${{ steps.vars.outputs.production }}"
