@@ -47,7 +47,7 @@ dayis=int(g.split(":")[1])
 f.close()
 
 wd=now.weekday()
-wd=6
+#wd=6
 
 if Line==-1:
     if wd==6:
