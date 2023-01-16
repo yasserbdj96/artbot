@@ -25,7 +25,7 @@ jobs:
       #  run: echo "${{ steps.vars.outputs.production }}"
 
       - name: Update Files
-        if: ${{ steps.vars.outputs.production  == 1 }}
+        if: ${{ GITHUB_OUTPUT  == 1 }}
         run: |
           git add .
           git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
@@ -33,5 +33,5 @@ jobs:
           git commit -am "Update Files"
           git push 
       - name: Do Nothing
-        if: ${{ steps.vars.outputs.production  == 0 }}
-        run: echo ${{ steps.vars.outputs.production }}
+        if: ${{ GITHUB_OUTPUT  == 0 }}
+        run: echo ${{ GITHUB_OUTPUT }}
