@@ -11,10 +11,12 @@ on:
 #  run:
 #    working-directory: wrdir
 jobs:
-  build:
+  job1:
     runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      output1: ${{ steps.step1.outputs.production }}
     steps:
-      - uses: actions/checkout@v2
       - name: step-1
         run: |
           output=$(python main.py)
@@ -24,12 +26,14 @@ jobs:
           echo "${output}"
           echo "name=production::${output}" >> $GITHUB_OUTPUT
         id: step1
-         #run: echo ${{ steps.vars.outputs.production }}
-      #- name: Print 0
-      #  if: ${{ steps.vars.outputs.production == 0 }} 
-      #  run: echo "${{ steps.vars.outputs.production }}"
+job2:
+  build:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - uses: actions/checkout@v2
       - name: Update Files
-        if: ${{ steps.vars.outputs.production  == 1 }}
+        if: ${{ needs.job1.outputs.output1  == 1 }}
         run: |
           git add .
           git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
@@ -37,5 +41,5 @@ jobs:
           git commit -am "Update Files"
           git push 
       - name: Do Nothing
-        if: ${{ steps.vars.outputs.production  == 0 }}
-        run: echo "${{ steps.vars.outputs.production }}"
+        if: ${{ needs.job1.outputs.output1  == 0 }}
+        run: echo ${{ needs.job1.outputs.output1 }}
