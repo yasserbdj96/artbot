@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: step-1
+      #- name: step-1
+      - id: step1
         run: |
           output=$(python main.py)
           output="${output//'%'/'%25'}"
@@ -23,7 +24,7 @@ jobs:
           output="${output//$'\r'/'%0D'}"
           echo "${output}"
           echo "name=production::${output}" >> $GITHUB_OUTPUT
-        id: step1
+        
          #run: echo ${{ steps.vars.outputs.production }}
       #- name: Print 0
       #  if: ${{ steps.vars.outputs.production == 0 }} 
