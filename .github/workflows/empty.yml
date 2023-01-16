@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: step-1
         run: |
-          output=$(python main.py)
+          output=$(python ../main.py)
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
           output="${output//$'\r'/'%0D'}"
