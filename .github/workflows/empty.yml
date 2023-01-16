@@ -37,4 +37,4 @@ jobs:
           git push 
       - name: Do Nothing
         if: ${{ steps.step1.outputs.changelog  == 0 }}
-        run: echo "empty"
+        run: echo ${{ steps.step1.outputs.changelog }}
