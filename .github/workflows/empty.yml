@@ -21,7 +21,7 @@ jobs:
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
           output="${output//$'\r'/'%0D'}" 
-          echo ${output}
+          echo "name=production::${output}" >> $GITHUB_OUTPUT
         id: step1
          #run: echo ${{ steps.vars.outputs.production }}
       #- name: Print 0
@@ -37,4 +37,4 @@ jobs:
           git push 
       - name: Do Nothing
         if: ${{ steps.vars.outputs.production  == 0 }}
-        run: echo ${{ steps.vars.outputs.production }}
+        run: echo ${ steps.vars.outputs.production }
