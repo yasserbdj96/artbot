@@ -26,20 +26,20 @@ jobs:
           echo "${output}"
           echo "name=production::${output}" >> $GITHUB_OUTPUT
         id: step1
-job2:
-  build:
-    runs-on: ubuntu-latest
-    needs: job1
-    steps:
-      - uses: actions/checkout@v2
-      - name: Update Files
-        if: ${{ needs.job1.outputs.output1  == 1 }}
-        run: |
-          git add .
-          git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
-          git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
-          git commit -am "Update Files"
-          git push 
-      - name: Do Nothing
-        if: ${{ needs.job1.outputs.output1  == 0 }}
-        run: echo ${{ needs.job1.outputs.output1 }}
+  job2:
+    build:
+      runs-on: ubuntu-latest
+      needs: job1
+      steps:
+        - uses: actions/checkout@v2
+        - name: Update Files
+          if: ${{ needs.job1.outputs.output1  == 1 }}
+          run: |
+            git add .
+            git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+            git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+            git commit -am "Update Files"
+            git push 
+        - name: Do Nothing
+          if: ${{ needs.job1.outputs.output1  == 0 }}
+          run: echo ${{ needs.job1.outputs.output1 }}
