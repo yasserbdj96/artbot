@@ -19,7 +19,7 @@ jobs:
         id: vars
         run: |
           python main.py
-          echo "::set-output name=production::true"
+          echo "name=production" >> $GITHUB_OUTPUT
       #- name: Print 0
       #  if: ${{ steps.vars.outputs.production == 0 }} 
       #  run: echo "${{ steps.vars.outputs.production }}"
