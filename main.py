@@ -47,7 +47,7 @@ dayis=int(g.split(":")[1])
 f.close()
 
 wd=now.weekday()
-#wd=1
+wd=6
 
 if Line==-1:
     if wd==6:
@@ -65,7 +65,7 @@ if work==True and wd!=dayis:
     print(1)
 elif Line+1==len(c):
     f=open('last.txt','w')
-    f.write('-1:0')
+    f.write('-1:2')
     #Line+=1
     f.close()
     print(1)
