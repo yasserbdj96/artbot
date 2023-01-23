@@ -69,16 +69,15 @@ elif Line+1==len(c):
     #Line+=1
     f.close()
     print(1)
+elif Line==-1:
+    print(0)
 else:
-    if Line==-1:
-        print(0)
+    #print(c[Line])
+    if c[Line]==1:
+        f=open("empty.md", "w+")
+        f.write(f'last update at : {now.strftime("%d/%m/%Y %H:%M:%S")} (UTC)')
+        f.close()
+        print(1)
     else:
-        #print(c[Line])
-        if c[Line]==1:
-            f=open("empty.md", "w+")
-            f.write(f'last update at : {now.strftime("%d/%m/%Y %H:%M:%S")} (UTC)')
-            f.close()
-            print(1)
-        else:
-            print(0)
+        print(0)
 #}END.
