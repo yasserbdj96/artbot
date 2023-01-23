@@ -70,7 +70,9 @@ elif Line+1==len(c):
     f.close()
     print(1)
 else:
-    if Line!=-1:
+    if Line==-1:
+        print(0)
+    else:
         #print(c[Line])
         if c[Line]==1:
             f=open("empty.md", "w+")
@@ -79,6 +81,4 @@ else:
             print(1)
         else:
             print(0)
-    else:
-        print(0)
 #}END.
