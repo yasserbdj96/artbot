@@ -35,6 +35,14 @@ jobs:
           git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
           git commit -am "Update Files"
           git push 
+      - name: Empty Commit
+        if: ${{ steps.step1.outputs.production  == 1 }}
+        run: |
+          git add .
+          git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+          git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+          git commit --allow-empty -m "Empty-Commit"
+          git push origin main
       - name: Do Nothing
         if: ${{ steps.step1.outputs.production  == 0 }}
         run: echo "${{ steps.step1.outputs.production }}"
