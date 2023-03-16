@@ -1,0 +1,49 @@
+name: Push To GitLab
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Check if the GitHub repository is public or private
+      - name: Get GitHub repository visibility
+        id: get_visibility
+        run: echo "::set-output name=visibility::$(curl -s -H 'Accept: application/vnd.github.v3+json' https://api.github.com/repos/${{ github.repository }} | jq -r '.private')"
+
+      # Set the repository name
+      - name: Set repository name
+        run: echo "::set-output name=repository_name::${{ github.repository_name }}"
+
+      # Create a new repository on GitLab if it doesn't exist yet
+      - name: Check if repository exists on GitLab
+        id: check_repo
+        uses: ericsgagnon/check-gitlab-repo-action@v1.0.0
+        with:
+          gitlab_token: ${{ secrets.GITLAB_TOKEN }}
+          repository_name: ${{ steps.set_repository_name.outputs.repository_name }}
+          gitlab_host: "https://gitlab.com"
+        continue-on-error: true
+
+      # Mirror the repository to GitLab if it exists, or create a new one
+      - name: Mirror to GitLab
+        uses: SvanBoxel/gitlab-mirror-and-ci-action@master
+        with:
+          args: "https://gitlab.com/${{ github.repository_owner }}/${{ github.repository_name }}"
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_HOSTNAME: "gitlab.com"
+          GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Set the GitLab repository visibility to private if the GitHub repository is private
+      - name: Set GitLab repository visibility
+        if: steps.get_visibility.outputs.visibility == 'true'
+        run: |
+          curl --request PUT --header "PRIVATE-TOKEN: ${{ secrets.GITLAB_TOKEN }}" "https://gitlab.com/api/v4/projects/${{ github.repository_owner }}%2F${{ github.repository_name }}" --data "visibility=private"
