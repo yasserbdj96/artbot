@@ -10,28 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create GitLab repository
-        uses: dpacmittal/create-repo-action@v1.0.0
+        uses: GitTools/actions-repo@v0.5.1
         with:
-          gitlab-token: ${{ secrets.GITLAB_TOKEN }}
-          repo-name: ${{ github.repository_name }}
-          namespace: ${{ github.repository_owner }}
+          name: ${{ github.repository_name }}
+          token: ${{ secrets.GITLAB_TOKEN }}
+          visibility: public
         id: create_repo
       - name: Make GitLab repo private if GitHub repo is private
         if: github.event.repository.private == true
-        uses: git-actions/gitlab-set-visibility-action@v1.0.1
-        with:
-          gitlab-token: ${{ secrets.GITLAB_TOKEN }}
-          gitlab-host: gitlab.com
-          gitlab-project: ${{ github.repository_owner }}/${{ github.repository_name }}
-          visibility: 'private'
+        run: |
+          curl --request PUT --header "PRIVATE-TOKEN: ${{ secrets.GITLAB_TOKEN }}" "https://gitlab.com/api/v4/projects/${{ steps.create_repo.outputs.id }}/visibility?visibility=private"
       - name: Make GitLab repo public if GitHub repo is public
         if: github.event.repository.private != true
-        uses: git-actions/gitlab-set-visibility-action@v1.0.1
-        with:
-          gitlab-token: ${{ secrets.GITLAB_TOKEN }}
-          gitlab-host: gitlab.com
-          gitlab-project: ${{ github.repository_owner }}/${{ github.repository_name }}
-          visibility: 'public'
+        run: |
+          curl --request PUT --header "PRIVATE-TOKEN: ${{ secrets.GITLAB_TOKEN }}" "https://gitlab.com/api/v4/projects/${{ steps.create_repo.outputs.id }}/visibility?visibility=public"
       - name: Mirror GitHub repo to GitLab and trigger CI
         uses: SvanBoxel/gitlab-mirror-and-ci-action@master
         with:
