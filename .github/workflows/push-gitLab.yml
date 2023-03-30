@@ -1,20 +1,47 @@
 name: Mirror and run GitLab CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Mirror + trigger CI
-      uses: SvanBoxel/gitlab-mirror-and-ci-action@master
-      with:
-        args: "https://gitlab.com/${{ github.repository_owner }}/${{ github.repository_name }}"
-      env:
-        FORCE_PUSH: "true"
-        GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-        GITLAB_HOSTNAME: "gitlab.com"
-        GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check if repo exists on GitLab
+        uses: dpacmittal/create-repo-action@v2
+        with:
+          repo-name: ${{ github.repository_name }}
+          repo-visibility: ${{ secrets.REPO_VISIBILITY }}
+          git-provider: gitlab
+          git-token: ${{ secrets.GITLAB_TOKEN }}
+          git-host: "gitlab.com"
+        id: create_repo
+      - name: Make GitLab repo private if GitHub repo is private
+        if: github.event.repository.private == true
+        uses: git-actions/gitlab-set-visibility-action@v1.0
+        with:
+          gitlab-api-url: 'https://gitlab.com/api/v4'
+          gitlab-token: ${{ secrets.GITLAB_TOKEN }}
+          gitlab-visibility: private
+          gitlab-project-id: ${{ steps.create_repo.outputs.repo_id }}
+      - name: Make GitLab repo public if GitHub repo is public
+        if: github.event.repository.private != true
+        uses: git-actions/gitlab-set-visibility-action@v1.0
+        with:
+          gitlab-api-url: 'https://gitlab.com/api/v4'
+          gitlab-token: ${{ secrets.GITLAB_TOKEN }}
+          gitlab-visibility: public
+          gitlab-project-id: ${{ steps.create_repo.outputs.repo_id }}
+      - name: Mirror GitHub repo to GitLab and trigger CI
+        uses: SvanBoxel/gitlab-mirror-and-ci-action@master
+        with:
+          args: "https://gitlab.com/${{ github.repository_owner }}/${{ github.repository_name }}"
+        env:
+          FORCE_PUSH: "true"
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_HOSTNAME: "gitlab.com"
+          GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
