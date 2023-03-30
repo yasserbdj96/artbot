@@ -9,17 +9,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if repo exists on GitLab
-        uses: GitTools/actions-repo@v1
+      - name: Create GitLab repository
+        uses: dpacmittal/create-repo-action@v1.0.0
         with:
-          token: ${{ secrets.GITLAB_TOKEN }}
-          provider: 'gitlab'
-          org: ${{ github.repository_owner }}
-          repo: ${{ github.repository_name }}
+          gitlab-token: ${{ secrets.GITLAB_TOKEN }}
+          repo-name: ${{ github.repository_name }}
+          namespace: ${{ github.repository_owner }}
         id: create_repo
       - name: Make GitLab repo private if GitHub repo is private
         if: github.event.repository.private == true
-        uses: dawidd6/action-set-repo-visibility@v2.2.0
+        uses: git-actions/gitlab-set-visibility-action@v1.0.1
         with:
           gitlab-token: ${{ secrets.GITLAB_TOKEN }}
           gitlab-host: gitlab.com
@@ -27,7 +26,7 @@ jobs:
           visibility: 'private'
       - name: Make GitLab repo public if GitHub repo is public
         if: github.event.repository.private != true
-        uses: dawidd6/action-set-repo-visibility@v2.2.0
+        uses: git-actions/gitlab-set-visibility-action@v1.0.1
         with:
           gitlab-token: ${{ secrets.GITLAB_TOKEN }}
           gitlab-host: gitlab.com
@@ -43,5 +42,3 @@ jobs:
           GITLAB_HOSTNAME: "gitlab.com"
           GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
