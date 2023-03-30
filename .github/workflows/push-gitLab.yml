@@ -1,23 +1,20 @@
-name: Mirror to GitLab
+name: Mirror and run GitLab CI
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
-  mirror:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v1
+    - name: Mirror + trigger CI
+      uses: SvanBoxel/gitlab-mirror-and-ci-action@master
+      with:
+        args: "https://gitlab.com/${{ github.repository_owner }}/${{ github.repository_name }}"
+      env:
+        FORCE_PUSH: "true"
+        GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+        GITLAB_HOSTNAME: "gitlab.com"
+        GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Mirror to GitLab
-        uses: SvanBoxel/gitlab-mirror-and-ci-action@master
-        with:
-          args: "https://gitlab.com/${{ github.repository_owner }}/${{ github.repository_name }}"
-        env:
-          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-          GITLAB_HOSTNAME: "gitlab.com"
-          GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
