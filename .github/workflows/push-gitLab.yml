@@ -10,30 +10,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if repo exists on GitLab
-        uses: dpacmittal/create-repo-action@v2
+        uses: GitTools/actions-repo@v1
         with:
-          repo-name: ${{ github.repository_name }}
-          repo-visibility: ${{ secrets.REPO_VISIBILITY }}
-          git-provider: gitlab
-          git-token: ${{ secrets.GITLAB_TOKEN }}
-          git-host: "gitlab.com"
+          token: ${{ secrets.GITLAB_TOKEN }}
+          provider: 'gitlab'
+          org: ${{ github.repository_owner }}
+          repo: ${{ github.repository_name }}
         id: create_repo
       - name: Make GitLab repo private if GitHub repo is private
         if: github.event.repository.private == true
-        uses: git-actions/gitlab-set-visibility-action@v1.0
+        uses: dawidd6/action-set-repo-visibility@v2.2.0
         with:
-          gitlab-api-url: 'https://gitlab.com/api/v4'
           gitlab-token: ${{ secrets.GITLAB_TOKEN }}
-          gitlab-visibility: private
-          gitlab-project-id: ${{ steps.create_repo.outputs.repo_id }}
+          gitlab-host: gitlab.com
+          gitlab-project: ${{ github.repository_owner }}/${{ github.repository_name }}
+          visibility: 'private'
       - name: Make GitLab repo public if GitHub repo is public
         if: github.event.repository.private != true
-        uses: git-actions/gitlab-set-visibility-action@v1.0
+        uses: dawidd6/action-set-repo-visibility@v2.2.0
         with:
-          gitlab-api-url: 'https://gitlab.com/api/v4'
           gitlab-token: ${{ secrets.GITLAB_TOKEN }}
-          gitlab-visibility: public
-          gitlab-project-id: ${{ steps.create_repo.outputs.repo_id }}
+          gitlab-host: gitlab.com
+          gitlab-project: ${{ github.repository_owner }}/${{ github.repository_name }}
+          visibility: 'public'
       - name: Mirror GitHub repo to GitLab and trigger CI
         uses: SvanBoxel/gitlab-mirror-and-ci-action@master
         with:
@@ -44,4 +43,5 @@ jobs:
           GITLAB_HOSTNAME: "gitlab.com"
           GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
