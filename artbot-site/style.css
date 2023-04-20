@@ -1,0 +1,53 @@
+/*
+   |                                                          |
+ --+----------------------------------------------------------+--
+   |   Code by : yasserbdj96                                  |
+   |   Email   : yasser.bdj96@gmail.com                       |
+   |   Github  : https://github.com/yasserbdj96               |
+   |   BTC     : bc1q2dks8w8uurca5xmfwv4jwl7upehyjjakr3xga9   |
+ --+----------------------------------------------------------+--  
+   |        all posts #yasserbdj96 ,all views my own.         |
+ --+----------------------------------------------------------+--
+   |                                                          |
+*/
+
+/*START{*/
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+.zero{
+    background-color: black;
+    color: black;
+}
+
+.one{
+    background-color: chartreuse;
+    color: chartreuse;
+}
+
+.w18{
+    width: 18px;
+}
+
+.pointer {cursor: pointer;}
+
+/**/
+.btn{
+    background-color: #303134;
+    border: 1px solid #303134;
+    border-radius: 4px;
+    color: #e8eaed;
+    font-family: arial,sans-serif;
+    font-size: 14px;
+    margin: 11px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+/*}END.*/
